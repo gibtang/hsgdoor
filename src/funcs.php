@@ -73,6 +73,22 @@ function isVisitorAuth()
             setCookie('hsgdoor_auth', '', time() - 86400);
         }
     }
+
+    	if (!empty($_POST['hsgdoor_auth']))
+	{//get the hsgdoor_auth via post for validation for the HSG iBeacon door app
+		$post_var = $_POST['hsgdoor_auth'];
+		$path = dirname(__DIR__) . '/codes/auth/' . $post_var;
+	
+		if ( is_file($path) )
+ 		{
+ 	        	$user = json_decode(file_get_contents($path), true);
+ 			return $user;
+ 		}
+		else
+		{
+			return false;
+		}
+	}
     return false;
 }
 
